@@ -196,16 +196,19 @@ p {
 
 .translation-prompt {
   justify-self: center;
-  min-width: min(100%, 18rem);
-  max-width: min(100%, 42rem);
-  padding: 0.35rem 0.9rem;
+  width: min(100%, 48rem);
+  min-height: 4.25rem;
+  display: grid;
+  place-items: center;
+  padding: 0.65rem 1.25rem;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   color: var(--ink);
   background: rgba(255, 255, 255, 0.9);
   text-align: center;
-  font-size: 1rem;
+  font-size: clamp(1.55rem, 3.2vw, 2.65rem);
   font-weight: 900;
+  line-height: 1.1;
   letter-spacing: 0;
 }
 
@@ -318,6 +321,11 @@ p {
     min-height: 4.4rem;
     padding: 0.65rem;
     font-size: 0.98rem;
+  }
+
+  .translation-prompt {
+    min-height: 3.75rem;
+    font-size: 1.35rem;
   }
 }
 

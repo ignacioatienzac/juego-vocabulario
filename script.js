@@ -52,13 +52,13 @@ const vocabulary = [
   },
   {
     label: "Fui de excursión",
-    translation: "I went on a trip",
+    translation: "I went for a hike",
     image: "images/ir-de-excursion.jpg",
     color: "#f2b84b",
   },
   {
     label: "Vamos de excursión",
-    translation: "We are going on a trip",
+    translation: "We are going for a hike",
     image: "images/ir-de-excursion.jpg",
     color: "#f2b84b",
   },
