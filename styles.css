@@ -153,18 +153,17 @@ p {
   width: min(100%, 78rem);
   min-height: 0;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  gap: 1.25rem;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  gap: 0.9rem;
   margin: 0 auto;
   padding: clamp(1rem, 3vw, 2rem);
 }
 
 .image-shell {
   position: relative;
-  width: auto;
-  max-width: min(100%, 25rem);
-  height: min(54vh, 34rem);
-  aspect-ratio: 3 / 4;
+  width: min(100%, 56rem);
+  max-height: min(56vh, 32rem);
+  aspect-ratio: 16 / 9;
   align-self: center;
   justify-self: center;
   overflow: hidden;
@@ -202,6 +201,20 @@ p {
 
 .image-fallback span {
   max-width: 10ch;
+}
+
+.tense-prompt {
+  justify-self: center;
+  min-width: 8rem;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0;
 }
 
 .answer-panel {
@@ -294,15 +307,14 @@ p {
 
   .play-area {
     min-height: calc(100dvh - 4.75rem);
-    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, 1fr) auto auto;
     gap: 0.8rem;
     padding: 0.9rem;
   }
 
   .image-shell {
-    width: auto;
-    max-width: min(100%, 21rem);
-    height: min(48dvh, 28rem);
+    width: min(100%, 42rem);
+    max-height: 46dvh;
   }
 
   .options {
