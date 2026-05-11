@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Practica vocabulario</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app" aria-live="polite">
+      <section class="start-screen" id="startScreen">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">V</span>
+          <span>Vocabulario</span>
+        </div>
+        <h1>Practica vocabulario</h1>
+        <p>Observa la imagen y elige la opción correcta antes de que termine el minuto.</p>
+        <button class="start-button" id="startButton" type="button">Empezar</button>
+      </section>
+
+      <section class="game-screen is-hidden" id="gameScreen" aria-label="Juego de vocabulario">
+        <header class="game-header">
+          <div class="stat">
+            <span>Tiempo</span>
+            <strong id="timer">1:00</strong>
+          </div>
+          <div class="stat">
+            <span>Puntos</span>
+            <strong id="score">0</strong>
+          </div>
+        </header>
+
+        <section class="play-area">
+          <div class="image-shell">
+            <img id="vocabularyImage" alt="" class="vocabulary-image">
+            <div class="image-fallback" id="imageFallback" aria-hidden="true">
+              <span id="fallbackText"></span>
+            </div>
+          </div>
+
+          <div class="answer-panel">
+            <p class="feedback" id="feedback" aria-live="assertive"></p>
+            <div class="options" id="options"></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="end-screen is-hidden" id="endScreen">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">V</span>
+          <span>Vocabulario</span>
+        </div>
+        <h1>Tiempo terminado</h1>
+        <p>Has conseguido <strong id="finalScore">0</strong> puntos.</p>
+        <button class="start-button" id="restartButton" type="button">Jugar otra vez</button>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
