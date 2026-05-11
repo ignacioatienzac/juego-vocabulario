@@ -3,32 +3,74 @@ const OPTIONS_PER_ROUND = 4;
 
 const vocabulary = [
   {
-    label: "hacer fotos",
+    label: "Hice fotos",
+    tense: "PAST",
     image: "images/hacer-fotos.jpg",
     color: "#2f80ed",
   },
   {
-    label: "descansar",
+    label: "Vamos a hacer fotos",
+    tense: "FUTURE",
+    image: "images/hacer-fotos.jpg",
+    color: "#2f80ed",
+  },
+  {
+    label: "Descansé",
+    tense: "PAST",
     image: "images/descansar.jpg",
     color: "#19a974",
   },
   {
-    label: "ir a la playa",
+    label: "Vamos a descansar",
+    tense: "FUTURE",
+    image: "images/descansar.jpg",
+    color: "#19a974",
+  },
+  {
+    label: "Fui a la playa",
+    tense: "PAST",
     image: "images/ir-a-la-playa.jpg",
     color: "#ef6f6c",
   },
   {
-    label: "ir a un museo",
+    label: "Vamos a la playa",
+    tense: "FUTURE",
+    image: "images/ir-a-la-playa.jpg",
+    color: "#ef6f6c",
+  },
+  {
+    label: "Fui a un museo",
+    tense: "PAST",
     image: "images/ir-a-un-museo.jpg",
     color: "#7c5cff",
   },
   {
-    label: "ir de excursión",
+    label: "Vamos a un museo",
+    tense: "FUTURE",
+    image: "images/ir-a-un-museo.jpg",
+    color: "#7c5cff",
+  },
+  {
+    label: "Fui de excursión",
+    tense: "PAST",
     image: "images/ir-de-excursion.jpg",
     color: "#f2b84b",
   },
   {
-    label: "ir a un concierto",
+    label: "Vamos de excursión",
+    tense: "FUTURE",
+    image: "images/ir-de-excursion.jpg",
+    color: "#f2b84b",
+  },
+  {
+    label: "Fui a un concierto",
+    tense: "PAST",
+    image: "images/ir-a-un-concierto.jpg",
+    color: "#d94f45",
+  },
+  {
+    label: "Vamos a un concierto",
+    tense: "FUTURE",
     image: "images/ir-a-un-concierto.jpg",
     color: "#d94f45",
   },
@@ -45,6 +87,7 @@ const finalScoreElement = document.querySelector("#finalScore");
 const imageElement = document.querySelector("#vocabularyImage");
 const imageFallback = document.querySelector("#imageFallback");
 const fallbackText = document.querySelector("#fallbackText");
+const tensePromptElement = document.querySelector("#tensePrompt");
 const feedbackElement = document.querySelector("#feedback");
 const optionsElement = document.querySelector("#options");
 
@@ -95,6 +138,7 @@ function renderRound() {
   isAnswerLocked = false;
   feedbackElement.textContent = "";
   feedbackElement.className = "feedback";
+  tensePromptElement.textContent = currentAnswer.tense;
   loadImage(currentAnswer);
 
   optionsElement.replaceChildren();
