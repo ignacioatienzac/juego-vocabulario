@@ -4,73 +4,73 @@ const OPTIONS_PER_ROUND = 4;
 const vocabulary = [
   {
     label: "Hice fotos",
-    tense: "PAST",
+    translation: "I took pictures",
     image: "images/hacer-fotos.jpg",
     color: "#2f80ed",
   },
   {
     label: "Vamos a hacer fotos",
-    tense: "FUTURE",
+    translation: "We are going to take pictures",
     image: "images/hacer-fotos.jpg",
     color: "#2f80ed",
   },
   {
     label: "Descansé",
-    tense: "PAST",
+    translation: "I rested",
     image: "images/descansar.jpg",
     color: "#19a974",
   },
   {
     label: "Vamos a descansar",
-    tense: "FUTURE",
+    translation: "We are going to rest",
     image: "images/descansar.jpg",
     color: "#19a974",
   },
   {
     label: "Fui a la playa",
-    tense: "PAST",
+    translation: "I went to the beach",
     image: "images/ir-a-la-playa.jpg",
     color: "#ef6f6c",
   },
   {
     label: "Vamos a la playa",
-    tense: "FUTURE",
+    translation: "We are going to the beach",
     image: "images/ir-a-la-playa.jpg",
     color: "#ef6f6c",
   },
   {
     label: "Fui a un museo",
-    tense: "PAST",
+    translation: "I went to a museum",
     image: "images/ir-a-un-museo.jpg",
     color: "#7c5cff",
   },
   {
     label: "Vamos a un museo",
-    tense: "FUTURE",
+    translation: "We are going to a museum",
     image: "images/ir-a-un-museo.jpg",
     color: "#7c5cff",
   },
   {
     label: "Fui de excursión",
-    tense: "PAST",
+    translation: "I went on a trip",
     image: "images/ir-de-excursion.jpg",
     color: "#f2b84b",
   },
   {
     label: "Vamos de excursión",
-    tense: "FUTURE",
+    translation: "We are going on a trip",
     image: "images/ir-de-excursion.jpg",
     color: "#f2b84b",
   },
   {
     label: "Fui a un concierto",
-    tense: "PAST",
+    translation: "I went to a concert",
     image: "images/ir-a-un-concierto.jpg",
     color: "#d94f45",
   },
   {
     label: "Vamos a un concierto",
-    tense: "FUTURE",
+    translation: "We are going to a concert",
     image: "images/ir-a-un-concierto.jpg",
     color: "#d94f45",
   },
@@ -85,17 +85,18 @@ const timerElement = document.querySelector("#timer");
 const scoreElement = document.querySelector("#score");
 const finalScoreElement = document.querySelector("#finalScore");
 const imageElement = document.querySelector("#vocabularyImage");
-const imageFallback = document.querySelector("#imageFallback");
-const fallbackText = document.querySelector("#fallbackText");
-const tensePromptElement = document.querySelector("#tensePrompt");
+const translationPromptElement = document.querySelector("#translationPrompt");
 const feedbackElement = document.querySelector("#feedback");
 const optionsElement = document.querySelector("#options");
+const initialStartLabel = startButton.textContent;
 
 let score = 0;
 let timeLeft = GAME_SECONDS;
 let currentAnswer = null;
 let timerId = null;
 let isAnswerLocked = false;
+let isImagePreloadComplete = false;
+const imageCache = new Map();
 
 function shuffle(items) {
   return [...items].sort(() => Math.random() - 0.5);
@@ -118,13 +119,47 @@ function updateStats() {
   scoreElement.textContent = score;
 }
 
+async function preloadImage(src) {
+  const image = new Image();
+  image.src = src;
+
+  if (image.decode) {
+    await image.decode();
+  } else if (!image.complete) {
+    await new Promise((resolve, reject) => {
+      image.addEventListener("load", resolve, { once: true });
+      image.addEventListener("error", reject, { once: true });
+    });
+  }
+
+  imageCache.set(src, image);
+}
+
+async function preloadImages() {
+  const imagePaths = [...new Set(vocabulary.map((item) => item.image))];
+  await Promise.all(imagePaths.map(preloadImage));
+  isImagePreloadComplete = true;
+}
+
+function prepareGame() {
+  startButton.disabled = true;
+  startButton.textContent = "Loading images...";
+
+  preloadImages()
+    .catch(() => {
+      isImagePreloadComplete = true;
+    })
+    .finally(() => {
+      startButton.disabled = false;
+      startButton.textContent = initialStartLabel;
+    });
+}
+
 function loadImage(item) {
+  const cachedImage = imageCache.get(item.image);
   imageElement.hidden = false;
-  imageFallback.hidden = false;
-  imageFallback.style.setProperty("--placeholder-color", item.color);
-  fallbackText.textContent = "Image";
   imageElement.alt = "Vocabulary image";
-  imageElement.src = item.image;
+  imageElement.src = cachedImage ? cachedImage.src : item.image;
 }
 
 function createOptions(answer) {
@@ -138,7 +173,7 @@ function renderRound() {
   isAnswerLocked = false;
   feedbackElement.textContent = "";
   feedbackElement.className = "feedback";
-  tensePromptElement.textContent = currentAnswer.tense;
+  translationPromptElement.textContent = currentAnswer.translation;
   loadImage(currentAnswer);
 
   optionsElement.replaceChildren();
@@ -188,6 +223,10 @@ function startTimer() {
 }
 
 function startGame() {
+  if (!isImagePreloadComplete) {
+    return;
+  }
+
   score = 0;
   timeLeft = GAME_SECONDS;
   updateStats();
@@ -204,15 +243,15 @@ function finishGame() {
 }
 
 imageElement.addEventListener("load", () => {
-  imageFallback.hidden = true;
+  imageElement.hidden = false;
 });
 
 imageElement.addEventListener("error", () => {
   imageElement.hidden = true;
-  imageFallback.hidden = false;
 });
 
 startButton.addEventListener("click", startGame);
 restartButton.addEventListener("click", startGame);
 
 showScreen("start");
+prepareGame();
