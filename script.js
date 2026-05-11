@@ -122,8 +122,8 @@ function loadImage(item) {
   imageElement.hidden = false;
   imageFallback.hidden = false;
   imageFallback.style.setProperty("--placeholder-color", item.color);
-  fallbackText.textContent = "Imagen";
-  imageElement.alt = "Imagen de vocabulario";
+  fallbackText.textContent = "Image";
+  imageElement.alt = "Vocabulary image";
   imageElement.src = item.image;
 }
 
@@ -162,11 +162,11 @@ function handleAnswer(selectedItem, selectedButton) {
 
   if (isCorrect) {
     score += 1;
-    feedbackElement.textContent = "Correcto";
+    feedbackElement.textContent = "Correct";
     feedbackElement.classList.add("is-correct");
     selectedButton.classList.add("is-correct");
   } else {
-    feedbackElement.textContent = `Era: ${currentAnswer.label}`;
+    feedbackElement.textContent = `Answer: ${currentAnswer.label}`;
     feedbackElement.classList.add("is-wrong");
     selectedButton.classList.add("is-wrong");
   }
