@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
